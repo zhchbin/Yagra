@@ -9,7 +9,21 @@ import subprocess
 import sys
 
 
-import cgitb; cgitb.enable()
+# Due to |hmac.compare_digest| is new in python 2.7.7, in order to be
+# compatible with other 2.7.x version, we use a similar implementation of
+# |compare_digest| to the Python implementation.
+#
+# See: http://stackoverflow.com/questions/18168819
+def compare_digest(x, y):
+    if not (isinstance(x, bytes) and isinstance(y, bytes)):
+        raise TypeError("both inputs should be instances of bytes")
+    if len(x) != len(y):
+        return False
+    result = 0
+    for a, b in zip(x, y):
+        result |= int(a, 16) ^ int(b, 16)
+    return result == 0
+
 
 def verify_signature(payload_body):
     x_hub_signature = os.getenv("HTTP_X_HUB_SIGNATURE")
@@ -24,7 +38,8 @@ def verify_signature(payload_body):
     # homework.
     SECRET_TOKEN = 'nQLr1TFpNvheiPPw9FnsUYD8vSeEV79L'
     mac = hmac.new(SECRET_TOKEN, msg=payload_body, digestmod=sha1)
-    return hmac.compare_digest(mac.hexdigest(), signature)
+    return compare_digest(mac.hexdigest(), signature)
+
 
 print 'Content-Type: application/json\n\n'
 result = {}
