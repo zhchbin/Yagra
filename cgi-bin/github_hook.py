@@ -9,6 +9,8 @@ import subprocess
 import sys
 
 
+import cgitb; cgitb.enable()
+
 def verify_signature(payload_body):
     x_hub_signature = os.getenv("HTTP_X_HUB_SIGNATURE")
     if not x_hub_signature:
@@ -33,8 +35,9 @@ else:
     payload_body = sys.stdin.read()
     result['success'] = verify_signature(payload_body)
     if result['success']:
+        path = os.path.dirname(os.path.realpath(__file__))
         process = subprocess.Popen('git pull && git submodule update',
-                                   cwd=PATH,
+                                   cwd=path,
                                    shell=True)
 
 print json.dumps(result)
