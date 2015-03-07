@@ -16,3 +16,21 @@ $ pep8 cgi-bin
 $ sudo apt-get install mysql-server libmysqlclient-dev
 $ sudo pip install -r requirements.txt
 ```
+
+Create a new database user and a new database
+
+``` bash
+$ mysql -u root -p
+Enter Password:
+...
+
+mysql> CREATE DATABASE yagra;
+mysql> CREATE USER 'yagra_user'@'localhost' IDENTIFIED BY '<user_password>';
+mysql> USE yagra;
+mysql> GRANT ALL ON yagra.* TO 'yagra_user'@'localhost';
+mysql> CREATE TABLE User(username VARCHAR(100) PRIMARY KEY, password BINARY(20));
+```
+
+## TODO
+
+- [ ] Should we add frequence limitaion of user register/login or use captcha?
