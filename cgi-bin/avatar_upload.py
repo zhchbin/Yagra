@@ -2,34 +2,13 @@
 
 from config import USER_AVATAR_DIRECTORY
 from hashlib import md5
-from util import connect_db
+from util import connect_db, print_html_and_exit, forbidden
 from MySQLdb import Error
 
 import Cookie
 import cgi
 import os
 import sys
-
-
-def print_html_and_exit(message):
-    print """\
-    Content-Type: text/html\n
-    <html>
-    <body>
-       <p>%s</p>
-    </body>
-    </html>
-    """ % (message,)
-    sys.exit(0)
-
-
-def forbidden():
-    print 'Status: 403 Forbidden'
-    print "Content-Type: text/html"
-    print
-    print "403 Forbidden"
-    sys.exit(0)
-
 
 if 'HTTP_COOKIE' not in os.environ:
     forbidden()
