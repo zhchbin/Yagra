@@ -19,12 +19,12 @@ def dump_response_and_exit(success, message):
 
 def print_html_and_exit(message):
     print """\
-    Content-Type: text/html\n
-    <html>
-    <body>
-       <p>%s</p>
-    </body>
-    </html>
+Content-Type: text/html\n
+<html>
+<body>
+    <p>%s</p>
+</body>
+</html>
     """ % (message,)
     sys.exit(0)
 
