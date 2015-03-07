@@ -27,7 +27,7 @@ try:
     con = connect_db()
     with con:
         cur = con.cursor()
-        cur.execute("INSERT INTO User values (%s, %s)",
+        cur.execute("INSERT INTO User(username, password) values (%s, %s)",
                     (username, hashlib.sha1(password).digest()))
         con.commit()
         dump_response_and_exit(True, 'Done.')
