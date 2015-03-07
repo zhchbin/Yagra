@@ -29,6 +29,7 @@ mysql> CREATE USER 'yagra_user'@'localhost' IDENTIFIED BY '<user_password>';
 mysql> USE yagra;
 mysql> GRANT ALL ON yagra.* TO 'yagra_user'@'localhost';
 mysql> CREATE TABLE User(username VARCHAR(100) PRIMARY KEY, password BINARY(20));
+mysql> CREATE TABLE Session (id VARCHAR(32) PRIMARY KEY, username VARCHAR(100) UNIQUE KEY, createAt DATETIME);
 ```
 
 ## TODO

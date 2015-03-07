@@ -1,21 +1,13 @@
-#!/usr/bin/python2.7
+#!/usr/bin/python
 
 from MySQLdb import Error
-from util import connect_db
+from util import connect_db, dump_response_and_exit
 
 import cgi
 import hashlib
 import json
 import re
 import sys
-
-
-def dump_response_and_exit(success, message):
-    response = {}
-    response['success'] = success
-    response['message'] = message
-    print json.dumps(response)
-    sys.exit(0)
 
 
 print "Content-type:applicaion/json\r\n\r\n"
