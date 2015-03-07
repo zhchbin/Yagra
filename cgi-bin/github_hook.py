@@ -1,11 +1,11 @@
 #!/usr/bin/python
 
 from hashlib import sha1
+from subprocess import check_output
 
 import hmac
 import json
 import os
-import subprocess
 import sys
 
 
@@ -51,8 +51,7 @@ else:
     result['success'] = verify_signature(payload_body)
     if result['success']:
         path = os.path.dirname(os.path.realpath(__file__))
-        process = subprocess.Popen('git pull && git submodule update',
-                                   cwd=path,
-                                   shell=True)
+        out = check_output(["git", "pull"], cwd=path)
+        result['out'] = out
 
 print json.dumps(result)
