@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Yagra</title>
+    <link href="http://libs.baidu.com/bootstrap/3.0.3/css/bootstrap.min.css" rel="stylesheet">
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    <style>
+      body {
+        font: normal 16px/20px "Helvetica Neue", Helvetica, sans-serif;
+        background: rgb(237, 237, 236);
+        margin: 0;
+        margin-top: 40px;
+        padding: 0;
+      }
+
+      section, header, footer {
+        display: block;
+      }
+
+      #wrapper {
+        width: 600px;
+        margin: 0 auto;
+        background: #fff url(../images/shade.jpg) repeat-x center bottom;
+        -moz-border-radius: 10px;
+        -webkit-border-radius: 10px;
+        border-radius: 10px;
+        border-top: 1px solid #fff;
+        padding-bottom: 76px;
+      }
+
+      h1 {
+        padding-top: 10px;
+      }
+
+      h2 {
+        font-size: 100%;
+        font-style: italic;
+      }
+
+      header,
+      article > *,
+      footer > * {
+        margin: 20px;
+      }
+
+      footer > * {
+        margin: 20px;
+        color: #999;
+      }
+
+      #holder {
+        border: 10px dashed #ccc;
+        width: 300px;
+        min-height: 300px;
+        margin: 20px auto;
+      }
+      #holder.hover {
+        border: 10px dashed #0c0;
+      }
+      #holder img {
+        display: block;
+        margin: 10px auto;
+      }
+      #holder p {
+        margin: 10px;
+        font-size: 14px;
+      }
+      progress {
+        width: 100%;
+      }
+      progress:after {
+        content: '%';
+      }
+      .fail {
+        background: #c00;
+        padding: 2px;
+        color: #fff;
+      }
+      .hidden {
+        display: none !important;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <section id="wrapper">
+        <header>
+          <div>
+            <label>当前用户: <span id="username"></span></label>
+            <a href="javascript:void(0);" class="pull-right" id="logout_btn">退出登陆</a>
+          </div>
+          <h1>您的头像</h1>
+        </header>
+        <article>
+          <div id="holder">
+          </div>
+          <p id="upload">
+            <label>您能将您要上传的头像拖动到上面，也可以使用下面的文件选择输入框
+              <br>
+              <input type="file">
+            </label>
+          </p>
+          <p id="filereader" class="hidden">File API &amp; FileReader API not supported</p>
+          <p id="formdata" class="hidden">XHR2's FormData is not supported</p>
+          <p id="progress" class="hidden">XHR2's upload progress isn't supported</p>
+          <p>上传进度：<progress id="uploadprogress" min="0" max="100" value="0">0</progress></p>
+        </article>
+        <footer><a href="http://github.com/zhchbin/Yagra">Yagra By Chaobin Zhang</a></footer>
+      </section>
+    </div>
+
+    <script src="http://libs.baidu.com/jquery/2.0.0/jquery.min.js"></script>
+    <script src="/js/avatar.js"></script>
+  </body>
+</html>

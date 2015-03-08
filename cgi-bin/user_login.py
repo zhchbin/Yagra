@@ -1,4 +1,5 @@
 #!/usr/bin/python
+# -*- coding: utf-8 -*-
 
 from util import connect_db, dump_response_and_exit
 from MySQLdb import Error
@@ -23,7 +24,7 @@ username = form.getvalue('username')
 password = form.getvalue('password')
 
 if username is None or password is None:
-    dump_response_and_exit(False, 'Missing field: username or password.')
+    dump_response_and_exit(False, '请输入用户名和密码。')
 
 try:
     con = connect_db()
@@ -32,7 +33,7 @@ try:
         cur.execute("SELECT password FROM User WHERE username=%s", (username,))
         data = cur.fetchall()
         if (len(data) == 0) or data[0][0] != hashlib.sha1(password).digest():
-            dump_response_and_exit(False, "Invalid username or password.")
+            dump_response_and_exit(False, "用户名或密码错误。")
 
         # Store cookie id into database.
         #

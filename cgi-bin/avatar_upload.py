@@ -1,8 +1,9 @@
 #!/usr/bin/python
+# -*- coding: utf-8 -*-
 
 from config import USER_AVATAR_DIRECTORY
 from hashlib import md5
-from util import connect_db, print_html_and_exit, forbidden
+from util import connect_db, dump_response_and_exit, forbidden
 from MySQLdb import Error
 
 import Cookie
@@ -19,6 +20,9 @@ cookie.load(cookie_string)
 if '_yagra_session' not in cookie:
     forbidden()
 
+print "Content-type:applicaion/json"
+print
+
 session_id = cookie['_yagra_session'].value
 con = connect_db()
 try:
@@ -26,22 +30,22 @@ try:
     cur.execute("SELECT username FROM Session WHERE id=%s", (session_id,))
     data = cur.fetchall()
     if len(data) == 0:
-        print_html_and_exit('Invalid session.')
+        dump_response_and_exit(False, '非法会话，请重新登陆。')
     username = data[0]
 except Error, e:
-    print_html_and_exit(e[1])
+    dump_response_and_exit(False, e[1])
 
 if not os.path.exists(USER_AVATAR_DIRECTORY):
     os.makedirs(USER_AVATAR_DIRECTORY)
 
 form = cgi.FieldStorage()
 if 'filename' not in form or not form['filename'].filename:
-    print_html_and_exit('No file was uploaded.')
+    dump_response_and_exit(False, '请选择文件。')
 
 fn = os.path.basename(form['filename'].filename)
 suffix = fn.split('.')[-1].lower()
 if suffix not in ['bmp', 'jpeg', 'jpg', 'png', 'gif', 'webp']:
-    print_html_and_exit('Invalid image format.')
+    dump_response_and_exit(False, '不合法的文件。')
 
 image = form['filename'].file.read()
 image_md5 = md5(image).hexdigest()
@@ -58,9 +62,9 @@ try:
     """, (image_filename, username))
     con.commit()
 except Error, e:
-    print_html_and_exit(e[1])
+    dump_response_and_exit(False, e[1])
 finally:
     con.close()
 
 message = 'Your avatar "' + fn + '" was uploaded successfully.'
-print_html_and_exit(message)
+dump_response_and_exit(True, message)
